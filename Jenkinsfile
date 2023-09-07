@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         // Set your GitHub credentials ID here
-        GITHUB_CREDENTIALS = credentials('GithubToken-JenkinsMailCICD ')
+        GITHUB_CREDENTIALS = credentials('Github-Token-Jenkins-Mail-CICD')
     }
     
 
@@ -39,11 +39,13 @@ pipeline {
                     def prTitle = prDetails.title
                     def prBody = prDetails.body
                     def prID = prDetails.id
+                    def prNUM = prDetails.number
 
                     // Set environment variables
                     env.PULL_REQUEST_TITLE = prTitle
                     env.PULL_REQUEST_BODY = prBody
                     env.PULL_REQUEST_ID = prID
+                    env.PULL_REQUEST_NUM = prNUM
                 }
             }
         }
@@ -52,6 +54,7 @@ pipeline {
                 echo "Pull Request Title: ${env.PULL_REQUEST_TITLE}"
                 echo "Pull Request Body: ${env.PULL_REQUEST_BODY}"
                 echo "Pull Request ID: ${env.PULL_REQUEST_ID}"
+                echo "Pull Request NUM : ${env.PULL_REQUEST_NUM}"
             }
         }
 
@@ -60,9 +63,11 @@ pipeline {
             steps {
                 script {                  
                     emailext body: "Pull Request Details:\n" +
-                                   "PR Number: ${PULL_REQUEST_BODY}\n" +
-                                   "PR Creator: ${PULL_REQUEST_TITLE}",
-                             subject: "Pull Request Details for PR#${PULL_REQUEST_ID}",
+                                   "Pull Request Title: ${PULL_REQUEST_TITLE}\n" +
+                                   "Pull Request Body: ${PULL_REQUEST_BODY}\n" +
+                                   "Pull Request ID: ${PULL_REQUEST_ID}\n" +
+                                   "Pull Request NUM: ${PULL_REQUEST_NUM}",
+                             subject: "Pull Request Details for PR#${PULL_REQUEST_ID} , PR_NUM#${PULL_REQUEST_NUM}",
                              to: 'tamilbecse139@gmail.com,vigneshwaran.sivasubramanian@quadgen.com',
                              mimeType: 'text/plain'
                 }        
