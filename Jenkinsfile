@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         // Set your GitHub credentials ID here
-        GITHUB_CREDENTIALS = credentials('Github Token -Jenkins Mail CICD')
+        GITHUB_CREDENTIALS = credentials('GithubToken-JenkinsMailCICD ')
     }
     
 
@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     def gitCommit = sh(script: 'git log --format=%H -n 1', returnStdout: true).trim()
-                    def prDetailsJson = sh(script: "curl -sSL https://api.github.com/repos/vignesh-s19/Github-Token-Jenkins-Mail-CICD/commits/$gitCommit/pulls", returnStdout: true).trim()
+                    def prDetailsJson = sh(script: "curl -sSL https://api.github.com/repos/vignesh-s19/GithubToken-JenkinsMailCICD/commits/$gitCommit/pulls", returnStdout: true).trim()
 
                     // Parse the JSON response using JsonSlurper
                     def jsonSlurper = new groovy.json.JsonSlurper()
